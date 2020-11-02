@@ -1,0 +1,10 @@
+.main-content {
+  margin-top: 100px;
+  /* display: flex; */
+}
+
+.heading {
+  width: 100%;
+  text-align: center;
+  font-size: x-large;
+}

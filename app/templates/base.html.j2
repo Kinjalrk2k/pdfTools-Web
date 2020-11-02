@@ -30,7 +30,12 @@
     />
     {% endfor %}
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
+    {% block styles %}
+      
+    {% endblock styles %}
     
     <title>{% block title %} pdfTools {% endblock title %}</title>
   </head>
