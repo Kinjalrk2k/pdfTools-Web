@@ -1,7 +1,9 @@
 from flask.templating import render_template
+from werkzeug.utils import secure_filename
 from app import merger
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 import os
+import time
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
                              static_folder="../static", template_folder="../templates/merger")
@@ -14,10 +16,12 @@ def index():
 
 @merger_blueprint.route('/upload', methods=['GET', 'POST'])
 def upload():
+    folder = current_app.config['UPLOAD_FOLDER'] + str(int(time.time()))
     if request.method == 'POST':
-        if not os.path.exists('uploads'):
-            os.makedirs('uploads')
+        if not os.path.exists(folder):
+            os.makedirs(folder)
         f = request.files.get('file')
-        f.save(os.path.join('uploads', f.filename))
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(folder, filename))
 
     return render_template('upload.html.j2')

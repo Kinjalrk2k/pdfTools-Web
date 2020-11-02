@@ -1,13 +1,13 @@
 from flask import Flask, render_template
-# from config import DevConfig
+from config import DevConfig
 from flask_dropzone import Dropzone
 
 dropzone = Dropzone()
 
 
-def create_app(config_name):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_name)
+    app.config.from_object(DevConfig)
 
     dropzone.init_app(app)
 
