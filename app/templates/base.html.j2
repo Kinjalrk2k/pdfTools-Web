@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link 
+      rel="stylesheet" 
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" 
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" 
+      crossorigin="anonymous">
+
     {% set base_css_path = 'node_modules/@adobe/spectrum-css/dist' %}
 
     {% set css_arr = [
@@ -24,10 +30,44 @@
     />
     {% endfor %}
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     
     <title>{% block title %} pdfTools {% endblock title %}</title>
   </head>
   <body>
+
+    <ul class="spectrum-Menu" role="menu" id="navbar">
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0">
+        <span class="spectrum-Menu-itemLabel brand">
+          <button class="spectrum-Button spectrum-Button--primary">
+            <span class="spectrum-Button-label">pdfTools Web</span>
+          </button>
+        </span>
+      </li>
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0">
+        <span class="spectrum-Menu-itemLabel">Merger</span>
+      </li>
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0">
+        <span class="spectrum-Menu-itemLabel">Splitter</span>
+      </li>
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0">
+        <span class="spectrum-Menu-itemLabel">Bookmarker</span>
+      </li>
+      <li class="spectrum-Menu-divider" role="separator"></li>
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0">
+        <span class="spectrum-Menu-itemLabel navbar-icon"><i class="fab fa-github"></i></span>
+        {# <button class="spectrum-Button spectrum-Button--cta">
+          <span class="spectrum-Button-label"><i class="fab fa-github"></i></span>
+        </button> #}
+      </li>
+      <li class="spectrum-Menu-item" role="menuitem" tabindex="0" id="toggle-mode-btn">
+        <span class="spectrum-Menu-itemLabel navbar-icon"><i class="fas fa-moon"></i></span>
+        {# <button class="spectrum-Button spectrum-Button--cta" id="toggle-mode-btn">
+          <span class="spectrum-Button-label"><i class="fas fa-moon"></i></span>
+        </button> #}
+      </li>
+    </ul>
+
     {% block body %}
       
     {% endblock body %}
