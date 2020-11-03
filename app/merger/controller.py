@@ -17,7 +17,7 @@ def index():
 @merger_blueprint.route('/upload', methods=['GET', 'POST'])
 def upload():
     curr_time = str(int(time.time()))
-    folder = current_app.config['UPLOAD_FOLDER']
+    folder = current_app.config['UPLOAD_FOLDER'] + curr_time
     if request.method == 'POST':
         if not os.path.exists(folder):
             os.makedirs(folder)
