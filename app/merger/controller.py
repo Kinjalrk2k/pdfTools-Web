@@ -12,12 +12,13 @@ merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
 
 @merger_blueprint.route('/')
 def index():
-    return render_template('index.html.j2')
+    curr_time = int(time.time())
+    print('index')
+    return render_template('merger.html.j2', id=curr_time)
 
 
 @merger_blueprint.route('<folderid>/arrange/')
 def arrange(folderid):
-    print('here')
     return render_template('arrange.html.j2', id=folderid)
 
 

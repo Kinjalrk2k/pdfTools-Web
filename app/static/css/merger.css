@@ -1,0 +1,8 @@
+a {
+  text-decoration: none;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
