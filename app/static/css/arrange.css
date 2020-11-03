@@ -1,6 +1,18 @@
 .file {
-  background-color: brown;
-  margin: 3px;
+  /* background-color: brown; */
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#arrange-container {
+  margin: 0 3rem 0 3rem;
+}
+
+.right {
+  display: flex;
+  justify-content: right;
+  /* flex-grow: 1; */
 }
 
 .gu-mirror {
@@ -9,4 +21,79 @@
 
 .file-input {
   display: none;
+}
+
+.spectrum-Stepper {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  margin-left: 2rem;
+}
+
+.spectrum-FieldButton {
+  /* border-width: 1px; */
+  border: var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)) solid
+    var(--spectrum-global-color-gray-500) !important;
+  /* font-weight: 900; */
+  border-radius: 0px 4px 4px 0px;
+}
+
+.spectrum-Stepper-stepUp {
+  border-bottom-right-radius: 0;
+}
+
+.spectrum-Stepper-stepDown {
+  border-top-right-radius: 0;
+}
+
+.spectrum-FieldButton i {
+  z-index: -99;
+}
+
+.spectrum-AssetList-item {
+  width: 100%;
+}
+
+.spectrum-Stepper-textfield {
+  width: auto;
+  height: auto;
+}
+
+input[type="number" i] {
+  /* border: none; */
+  border: var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)) solid
+    var(--spectrum-global-color-gray-500);
+  -moz-appearance: textfield;
+
+  border-radius: 4px 0px 0px 4px !important;
+
+  padding-left: 12px;
+
+  background-color: var(--spectrum-global-color-gray-100);
+  color: var(--spectrum-global-color-gray-900);
+
+  font-family: var(--spectrum-alias-body-text-font-family, var(--spectrum-global-font-family-base));
+  font-size: var(--spectrum-textfield-text-size, var(--spectrum-alias-font-size-default));
+  font-style: italic;
+}
+
+label {
+  padding: 15px 15px 0 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+#submit-btn {
+  margin-top: 2rem;
+  font-size: x-large;
+  border-radius: 2rem;
 }
