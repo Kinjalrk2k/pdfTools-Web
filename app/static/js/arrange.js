@@ -38,3 +38,13 @@ $(".spectrum-Stepper-stepDown").on("click", function () {
 
   $button.parent().parent().find("input").val(newVal);
 });
+
+function checkbox(e) {
+  e = e || window.event;
+  var targ = e.target || e.srcElement || e;
+  if (targ.checked) {
+    targ.parentElement.parentElement.parentElement.classList.remove("disabled");
+  } else {
+    targ.parentElement.parentElement.parentElement.classList.add("disabled");
+  }
+}

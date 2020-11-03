@@ -109,3 +109,9 @@ input::-webkit-inner-spin-button {
 button svg {
   margin-bottom: 5px;
 }
+
+.disabled {
+  color: var(--spectrum-alias-icon-color-disabled) !important;
+  text-decoration: line-through !important;
+  background-color: var(--spectrum-alias-track-color-disabled) !important;
+}

@@ -20,7 +20,8 @@
         <div class="file spectrum-AssetList-item is-branch is-selectable is-selected">
           <div class="left">
             <div class="spectrum-Checkbox">
-              <input type="checkbox" class="spectrum-Checkbox-input" name="file_{{ loop.index }}['check']" checked>
+              <input type="checkbox" class="spectrum-Checkbox-input" 
+              name="file_{{ loop.index }}['check']" checked onclick="checkbox(this);">
               <span class="spectrum-Checkbox-box"></span>
             </div>
             
