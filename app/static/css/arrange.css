@@ -15,6 +15,13 @@
   /* flex-grow: 1; */
 }
 
+.left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  /* flex-grow: 1; */
+}
+
 .gu-mirror {
   display: none;
 }
@@ -79,6 +86,7 @@ input[type="number" i] {
 
 label {
   padding: 15px 15px 0 0;
+  font-style: italic;
 }
 
 input::-webkit-outer-spin-button,
@@ -96,4 +104,8 @@ input::-webkit-inner-spin-button {
   margin-top: 2rem;
   font-size: x-large;
   border-radius: 2rem;
+}
+
+button svg {
+  margin-bottom: 5px;
 }

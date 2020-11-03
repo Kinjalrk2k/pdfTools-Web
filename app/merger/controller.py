@@ -1,3 +1,4 @@
+from re import T
 from flask.helpers import send_file, url_for
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
@@ -52,25 +53,51 @@ def arrange(folderid):
     return render_template('arrange.html.j2', file_list=file_list, id=folderid)
 
 
+def ordered_dict_yielder(ordered_dict):
+    for key, values in ordered_dict.items():
+        yield values
+
+
 @merger_blueprint.route('<folderid>/complete/', methods=['GET', 'POST'])
 def complete(folderid):
     if request.method == 'POST':
+        print(request.form)
+
         i = 0
+        ignore = False
         temp_dict = dict()
         ordered_file_list = []
-        for key, value in request.form.items():
-            if i == 0:
-                temp_dict["filename"] = value
-                i += 1
-            elif i == 1:
-                temp_dict["start"] = int(value)
-                i += 1
-            elif i == 2:
-                temp_dict["end"] = int(value)
-                print(temp_dict)
-                ordered_file_list.append(temp_dict.copy())
-                i = 0
 
+        # for i, value in enumerate(ordered_dict_yielder(request.form)):
+        #     print(i, value)
+        #     print(ordered_dict_yielder(request.form))
+
+        for key, value in request.form.items():
+            print(i, key, value)
+            if i == 0:
+                if value == "on":
+                    ignore = False
+                    # i += 1
+                else:
+                    ignore = True
+                    i += 1
+            if i == 1 and (not ignore):
+                temp_dict["filename"] = value
+                # i += 1
+            elif i == 2 and (not ignore):
+                temp_dict["start"] = int(value)
+                # i += 1
+            elif i == 3:
+                if not ignore:
+                    temp_dict["end"] = int(value)
+                    print(temp_dict)
+                    ordered_file_list.append(temp_dict.copy())
+                i = 0
+                ignore = False
+                continue
+            i += 1
+
+        print(ordered_file_list)
         folder = current_app.config['UPLOAD_FOLDER'] + folderid
         merger.merge(ordered_file_list, folder, folderid+".pdf")
 
