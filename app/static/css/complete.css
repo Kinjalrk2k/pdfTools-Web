@@ -1,6 +1,8 @@
 .spectrum-Asset {
   width: 50%;
   margin: auto;
+  flex-direction: row !important;
+  justify-content: space-around;
 }
 
 .spectrum-AssetList-itemLabel {
