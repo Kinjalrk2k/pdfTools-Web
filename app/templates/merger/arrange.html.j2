@@ -1,5 +1,9 @@
 {% extends 'base.html.j2' %}
 
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/arrange.css') }}">
+{% endblock styles %}
+
 {% block title %}
     {{ super() }}
      | Arrange files
@@ -8,5 +12,22 @@
 {% block body %}
 <div class="main-content">
   {{ id }}
+
+  <div id="arrange-container">
+
+    {% for file in file_list %}
+      <div class="file">{{ file }}</div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock body %}
+
+{% block scripts %}
+  {{ super() }}
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js" 
+    integrity="sha512-NgXVRE+Mxxf647SqmbB9wPS5SEpWiLFp5G7ItUNFi+GVUyQeP+7w4vnKtc2O/Dm74TpTFKXNjakd40pfSKNulg==" 
+    crossorigin="anonymous">
+  </script>
+  <script src="{{ url_for('static', filename='js/arrange.js') }}"></script>
+{% endblock scripts %}

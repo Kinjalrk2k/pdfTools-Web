@@ -19,7 +19,10 @@ def index():
 
 @merger_blueprint.route('<folderid>/arrange/')
 def arrange(folderid):
-    return render_template('arrange.html.j2', id=folderid)
+    folder = current_app.config['UPLOAD_FOLDER'] + folderid
+    file_list = os.listdir(folder)
+    print()
+    return render_template('arrange.html.j2', file_list=file_list)
 
 
 @merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
