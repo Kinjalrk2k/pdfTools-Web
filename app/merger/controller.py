@@ -5,7 +5,7 @@ from app import merger
 from flask import Blueprint, request, current_app, redirect
 import os
 import time
-from ..pdfTools import details
+from ..pdfTools import details, merger
 
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
@@ -43,18 +43,20 @@ def complete(folderid):
         temp_dict = dict()
         ordered_file_list = []
         for key, value in request.form.items():
-            print(key, value)
             if i == 0:
                 temp_dict["filename"] = value
                 i += 1
             elif i == 1:
-                temp_dict["start"] = value
+                temp_dict["start"] = int(value)
                 i += 1
             elif i == 2:
-                temp_dict["end"] = value
+                temp_dict["end"] = int(value)
                 print(temp_dict)
                 ordered_file_list.append(temp_dict.copy())
                 i = 0
+
+        folder = current_app.config['UPLOAD_FOLDER'] + folderid
+        merger.merge(ordered_file_list, folder, folderid+".pdf")
 
     return "OK"
 
