@@ -1,0 +1,8 @@
+.spectrum-Asset {
+  width: 50%;
+  margin: auto;
+}
+
+.spectrum-AssetList-itemLabel {
+  color: var(--spectrum-global-color-gray-900);
+}

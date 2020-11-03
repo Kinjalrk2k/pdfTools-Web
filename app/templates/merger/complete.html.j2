@@ -1,0 +1,38 @@
+{% extends 'base.html.j2' %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/complete.css') }}">
+{% endblock styles %}
+
+{% block body %}
+<div class="main-content">
+  <a href="/merger/{{ id }}/download/">
+    <div class="spectrum-Asset spectrum-Dropzone is-dragged">
+      <svg viewBox="0 0 128 128" class="spectrum-Asset-file">
+        <path class="spectrum-Asset-fileBackground" d="M24,126c-5.5,0-10-4.5-10-10V12c0-5.5,4.5-10,10-10h61.5c2.1,0,4.1,0.8,5.6,2.3l20.5,20.4c1.5,1.5,2.4,3.5,2.4,5.7V116c0,5.5-4.5,10-10,10H24z"></path>
+        <path class="spectrum-Asset-fileOutline" d="M113.1,23.3L92.6,2.9C90.7,1,88.2,0,85.5,0H24c-6.6,0-12,5.4-12,12v104c0,6.6,5.4,12,12,12h80c6.6,0,12-5.4,12-12V30.4C116,27.8,114.9,25.2,113.1,23.3z M90,6l20.1,20H92c-1.1,0-2-0.9-2-2V6z M112,116c0,4.4-3.6,8-8,8H24c-4.4,0-8-3.6-8-8V12c0-4.4,3.6-8,8-8h61.5c0.2,0,0.3,0,0.5,0v20c0,3.3,2.7,6,6,6h20c0,0.1,0,0.3,0,0.4V116z"></path>
+      </svg>
+      
+      <li class="spectrum-AssetList-item is-branch is-selectable is-selected" tabindex="0">
+        <label class="spectrum-Checkbox spectrum-AssetList-itemSelector">
+          <input type="checkbox" class="spectrum-Checkbox-input" id="checkbox-1" tabindex="-1" checked>
+          <span class="spectrum-Checkbox-box">
+            <svg class="spectrum-Icon spectrum-UIIcon-CheckmarkSmall spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
+              <use xlink:href="#spectrum-css-icon-CheckmarkSmall" />
+            </svg>
+          </span>
+        </label>
+        <svg class="spectrum-Icon spectrum-Icon--sizeM spectrum-AssetList-itemThumbnail" focusable="false" aria-hidden="true" aria-label="FileCSV">
+          <use xlink:href="#spectrum-icon-24-FileCSV"></use>
+        </svg>
+        <span class="spectrum-AssetList-itemLabel">{{ id }}.pdf</span>
+        <svg class="spectrum-Icon spectrum-UIIcon-ChevronRightMedium spectrum-AssetList-itemChildIndicator" focusable="false" aria-hidden="true">
+          <use xlink:href="#spectrum-css-icon-ChevronRightMedium" />
+        </svg>
+      </li>
+    </div>
+  </a>
+  
+    
+</div>
+{% endblock body %}

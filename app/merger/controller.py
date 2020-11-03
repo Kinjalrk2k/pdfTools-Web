@@ -1,4 +1,4 @@
-from flask.helpers import url_for
+from flask.helpers import send_file, url_for
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
 from app import merger
@@ -17,6 +17,22 @@ def index():
     curr_time = int(time.time())
     print('index')
     return render_template('merger.html.j2', id=curr_time)
+
+
+@merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
+def upload(folderid):
+    folder = current_app.config['UPLOAD_FOLDER'] + folderid
+    if request.method == 'POST':
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        for key, f in request.files.items():
+            if key.startswith('file'):
+                f.save(os.path.join(folder, f.filename))
+                print("Uploaded...", f.filename)
+        return render_template('arrange.html.j2', id=folderid)
+    else:
+        return render_template('upload.html.j2', id=folderid)
 
 
 @merger_blueprint.route('<folderid>/arrange/',  methods=['GET', 'POST'])
@@ -58,20 +74,12 @@ def complete(folderid):
         folder = current_app.config['UPLOAD_FOLDER'] + folderid
         merger.merge(ordered_file_list, folder, folderid+".pdf")
 
-    return "OK"
+    return render_template("complete.html.j2", id=folderid)
 
 
-@merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
-def upload(folderid):
+@merger_blueprint.route('<folderid>/download/')
+def download(folderid):
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
-    if request.method == 'POST':
-        if not os.path.exists(folder):
-            os.makedirs(folder)
+    download_file = os.path.join("..", folder, folderid + ".pdf")
 
-        for key, f in request.files.items():
-            if key.startswith('file'):
-                f.save(os.path.join(folder, f.filename))
-                print("Uploaded...", f.filename)
-        return render_template('arrange.html.j2', id=folderid)
-    else:
-        return render_template('upload.html.j2', id=folderid)
+    return send_file(download_file, as_attachment=True)
