@@ -8,9 +8,16 @@
   padding: 0;
 }
 
+#submit-btn {
+  margin-bottom: 24px;
+}
+
+a {
+  text-decoration: none;
+}
+
 .dropzone {
   background-color: transparent !important;
-  /* border: none !important; */
   position: relative !important;
   color: transparent;
 
@@ -27,13 +34,8 @@
 
 .spectrum-IllustratedMessage--cta {
   position: relative;
-  /* top: -100px; */
   z-index: -999;
 }
-
-/* .dz-default.dz-message {
-  display: none;
-} */
 
 .dz-message {
   color: var(--spectrum-global-color-gray-900);

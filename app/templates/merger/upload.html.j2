@@ -27,9 +27,16 @@
       </div>
     </div>
     <div>
-      <button class="spectrum-Button spectrum-Button--cta" id="submit-btn">
-        <span class="spectrum-Button-label">Continue&nbsp;<i class="fas fa-arrow-right"></i></span>
+      <button type="submit" class="spectrum-Button spectrum-Button--cta" id="submit-btn">
+        <span class="spectrum-Button-label">Upload&nbsp;<i class="fas fa-cloud-upload-alt"></i></span>
       </button>
+    </div>
+    <div>
+      <a href="{{ url_for('merger.arrange', folderid=id) }}">
+        <button class="spectrum-Button spectrum-Button--cta" id="continue-btn">
+          <span class="spectrum-Button-label">Continue&nbsp;<i class="fas fa-arrow-right"></i></span>
+        </button>
+      </a>
     </div>
   </div>
 
