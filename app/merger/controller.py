@@ -5,6 +5,8 @@ from app import merger
 from flask import Blueprint, request, current_app, redirect
 import os
 import time
+from ..pdfTools import details
+
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
                              static_folder="../static", template_folder="../templates/merger")
@@ -17,12 +19,44 @@ def index():
     return render_template('merger.html.j2', id=curr_time)
 
 
-@merger_blueprint.route('<folderid>/arrange/')
+@merger_blueprint.route('<folderid>/arrange/',  methods=['GET', 'POST'])
 def arrange(folderid):
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
-    file_list = os.listdir(folder)
-    print()
-    return render_template('arrange.html.j2', file_list=file_list)
+    files_dict = dict()
+    file_list = []
+    for filename in os.listdir(folder):
+        # print(details.get_page_numbers(folder, filename))
+        file_list.append({
+            "filename": filename,
+            "pages": details.get_page_numbers(folder, filename)
+        })
+
+    print(file_list)
+
+    return render_template('arrange.html.j2', file_list=file_list, id=folderid)
+
+
+@merger_blueprint.route('<folderid>/complete/', methods=['GET', 'POST'])
+def complete(folderid):
+    if request.method == 'POST':
+        i = 0
+        temp_dict = dict()
+        ordered_file_list = []
+        for key, value in request.form.items():
+            print(key, value)
+            if i == 0:
+                temp_dict["filename"] = value
+                i += 1
+            elif i == 1:
+                temp_dict["start"] = value
+                i += 1
+            elif i == 2:
+                temp_dict["end"] = value
+                print(temp_dict)
+                ordered_file_list.append(temp_dict.copy())
+                i = 0
+
+    return "OK"
 
 
 @merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])

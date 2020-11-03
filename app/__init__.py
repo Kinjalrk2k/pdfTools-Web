@@ -1,12 +1,23 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Request
 from config import DevConfig
 from flask_dropzone import Dropzone
+
+from werkzeug.datastructures import ImmutableOrderedMultiDict
+
+
+class MyRequest(Request):
+    parameter_storage_class = ImmutableOrderedMultiDict
+
+
+class MyFlask(Flask):
+    request_class = MyRequest
+
 
 dropzone = Dropzone()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = MyFlask(__name__)
     app.config.from_object(DevConfig)
 
     dropzone.init_app(app)

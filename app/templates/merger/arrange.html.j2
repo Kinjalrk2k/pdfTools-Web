@@ -13,12 +13,22 @@
 <div class="main-content">
   {{ id }}
 
-  <div id="arrange-container">
+  <form action="/merger/{{ id }}/complete/" method="POST">
+    <div id="arrange-container">
+      {% for file in file_list %}
+        <div class="file">
+          <input type="text" name="file_{{ loop.index }}['name']" id="" value="{{ file['filename'] }}" class="file-input">
+          {{ file['filename'] }}
+          <input type="number" name="file_{{ loop.index }}['start']" id="" value=1>
+          <input type="number" name="file_{{ loop.index }}['end']" id="" value={{ file["pages"] }}>
+        </div>
+      {% endfor %}
+    </div>
 
-    {% for file in file_list %}
-      <div class="file">{{ file }}</div>
-    {% endfor %}
-  </div>
+    <button type="submit">Submit</button>
+  </form>
+
+
 </div>
 {% endblock body %}
 
