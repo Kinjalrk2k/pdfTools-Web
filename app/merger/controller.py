@@ -16,12 +16,15 @@ def index():
 
 @merger_blueprint.route('/upload', methods=['GET', 'POST'])
 def upload():
-    folder = current_app.config['UPLOAD_FOLDER'] + str(int(time.time()))
+    curr_time = str(int(time.time()))
+    folder = current_app.config['UPLOAD_FOLDER']
     if request.method == 'POST':
         if not os.path.exists(folder):
             os.makedirs(folder)
-        f = request.files.get('file')
-        filename = secure_filename(f.filename)
-        f.save(os.path.join(folder, filename))
+
+        for key, f in request.files.items():
+            if key.startswith('file'):
+                f.save(os.path.join(folder, f.filename))
+                print("Uploaded...", f.filename)
 
     return render_template('upload.html.j2')

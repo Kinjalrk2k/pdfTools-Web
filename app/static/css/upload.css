@@ -1,6 +1,7 @@
 .upload-location {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .spectrum-Dropzone {
@@ -20,6 +21,8 @@
   z-index: 999;
 
   border-style: dashed !important;
+
+  margin-bottom: 24px;
 }
 
 .spectrum-IllustratedMessage--cta {
@@ -56,4 +59,13 @@ p {
 
 .dz-drag-hover svg {
   color: var(--spectrum-global-color-blue-400) !important;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-image {
+  background-image: none !important;
+  background-color: var(--spectrum-alias-highlight-selected) !important;
+}
+
+.spectrum-IllustratedMessage-illustration {
+  margin-top: 24px;
 }
