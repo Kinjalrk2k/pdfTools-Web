@@ -53,11 +53,6 @@ def arrange(folderid):
     return render_template('arrange.html.j2', file_list=file_list, id=folderid)
 
 
-def ordered_dict_yielder(ordered_dict):
-    for key, values in ordered_dict.items():
-        yield values
-
-
 @merger_blueprint.route('<folderid>/complete/', methods=['GET', 'POST'])
 def complete(folderid):
     if request.method == 'POST':
@@ -68,25 +63,18 @@ def complete(folderid):
         temp_dict = dict()
         ordered_file_list = []
 
-        # for i, value in enumerate(ordered_dict_yielder(request.form)):
-        #     print(i, value)
-        #     print(ordered_dict_yielder(request.form))
-
         for key, value in request.form.items():
             print(i, key, value)
             if i == 0:
                 if value == "on":
                     ignore = False
-                    # i += 1
                 else:
                     ignore = True
                     i += 1
             if i == 1 and (not ignore):
                 temp_dict["filename"] = value
-                # i += 1
             elif i == 2 and (not ignore):
                 temp_dict["start"] = int(value)
-                # i += 1
             elif i == 3:
                 if not ignore:
                     temp_dict["end"] = int(value)
@@ -98,6 +86,10 @@ def complete(folderid):
             i += 1
 
         print(ordered_file_list)
+        if len(ordered_file_list) == 0:
+            print(request.referrer)
+            return redirect("/merger/" + folderid + "/arrange/")
+
         folder = current_app.config['UPLOAD_FOLDER'] + folderid
         merger.merge(ordered_file_list, folder, folderid+".pdf")
 

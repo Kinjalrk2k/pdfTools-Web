@@ -115,3 +115,12 @@ button svg {
   text-decoration: line-through !important;
   background-color: var(--spectrum-alias-track-color-disabled) !important;
 }
+
+.error {
+  border: 1px solid var(--spectrum-alias-icon-color-error) !important;
+}
+
+.error-row div {
+  color: var(--spectrum-alias-icon-color-error) !important;
+  display: none;
+}

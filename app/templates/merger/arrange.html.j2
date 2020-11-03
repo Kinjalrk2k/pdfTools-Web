@@ -14,7 +14,7 @@
   <div class="heading">
     <h1>Arrange files</h1>
   </div>
-  <form action="/merger/{{ id }}/complete/" method="POST">
+  <form action="/merger/{{ id }}/complete/" method="POST" id="idform">
     <div id="arrange-container">
       {% for file in file_list %}
         <div class="file spectrum-AssetList-item is-branch is-selectable is-selected">
@@ -77,6 +77,11 @@
       {% endfor %}
     </div>
 
+
+
+    <div class="error-row row">
+      <div class="spectrum-StatusLight spectrum-StatusLight--negative">Please select atleast one file!</div>
+    </div>
     <div class="row">
       <button type="submit" class="spectrum-Button spectrum-Button--cta" id="submit-btn">
         <span class="spectrum-Button-label">Merge!</span>
