@@ -76,3 +76,10 @@ p {
   background-image: none !important;
   background-color: var(--spectrum-global-color-blue-500) !important;
 }
+
+.spectrum-StatusLight--negative {
+  margin-bottom: 24px;
+  border: 1px dashed var(--spectrum-global-color-red-700);
+  border-radius: 6px;
+  padding: 5px;
+}

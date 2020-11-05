@@ -13,3 +13,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.row {
+  display: flex;
+  justify-content: center;
+}

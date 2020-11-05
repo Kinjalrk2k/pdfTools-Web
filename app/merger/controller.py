@@ -1,5 +1,5 @@
 from re import T
-from flask.helpers import send_file, url_for
+from flask.helpers import flash, get_flashed_messages, send_file, url_for
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
 from app import merger
@@ -23,6 +23,7 @@ def index():
 
 @merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
 def upload(folderid):
+    get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
     if request.method == 'POST':
         if not os.path.exists(folder):
@@ -52,12 +53,16 @@ def arrange(folderid):
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
     files_dict = dict()
     file_list = []
-    for filename in os.listdir(folder):
-        # print(details.get_page_numbers(folder, filename))
-        file_list.append({
-            "filename": filename,
-            "pages": details.get_page_numbers(folder, filename)
-        })
+    try:
+        for filename in os.listdir(folder):
+            # print(details.get_page_numbers(folder, filename))
+            file_list.append({
+                "filename": filename,
+                "pages": details.get_page_numbers(folder, filename)
+            })
+    except Exception:
+        flash("Please upload atleast ONE file!")
+        return redirect(url_for('merger.upload', folderid=folderid))
 
     print(file_list)
 

@@ -16,6 +16,17 @@
     <h1>Upload files</h1>
   </div>
 
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="row">
+          <div class="spectrum-StatusLight spectrum-StatusLight--negative">{{ message }}</div>
+          {# <div class="alert alert-danger">{{ message }}</div> #}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <div class="upload-location">
     <div class="spectrum-Dropzone dropzone" role="region" tabindex="0" style="width: 50%;" id="upload-box">
       <div class="spectrum-IllustratedMessage spectrum-IllustratedMessage--cta">
