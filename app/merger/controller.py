@@ -98,7 +98,14 @@ def download(folderid):
         yield from file_handle
         file_handle.close()
         # os.remove(folder)
-        shutil.rmtree(folder)
+        # shutil.rmtree(folder, ignore_errors=True)
+        for filename in os.listdir(folder):
+            filepath = os.path.join(folder, filename)
+            try:
+                shutil.rmtree(filepath)
+            except OSError:
+                os.remove(filepath)
+        shutil.rmtree(folder, ignore_errors=True)
 
     r = current_app.response_class(generate(), mimetype='application/pdf')
     r.headers.set('Content-Disposition', 'attachment',
