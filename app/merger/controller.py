@@ -8,6 +8,7 @@ import os
 import time
 from ..pdfTools import details, merger
 from ..utils import metadata
+import shutil
 
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
@@ -90,6 +91,17 @@ def complete(folderid):
 @merger_blueprint.route('<folderid>/download/')
 def download(folderid):
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
-    download_file = os.path.join("..", folder, folderid + ".pdf")
+    download_file = os.path.join(folder, folderid + ".pdf")
+    file_handle = open(download_file, 'rb')
 
-    return send_file(download_file, as_attachment=True, cache_timeout=0)
+    def generate():
+        yield from file_handle
+        file_handle.close()
+        # os.remove(folder)
+        shutil.rmtree(folder)
+
+    r = current_app.response_class(generate(), mimetype='application/pdf')
+    r.headers.set('Content-Disposition', 'attachment',
+                  filename=folderid + '.pdf')
+    return r
+    # return send_file(download_file, as_attachment=True, cache_timeout=0)
