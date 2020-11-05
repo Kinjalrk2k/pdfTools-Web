@@ -3,10 +3,11 @@ from flask.helpers import send_file, url_for
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
 from app import merger
-from flask import Blueprint, request, current_app, redirect
+from flask import Blueprint, request, current_app, redirect, after_this_request
 import os
 import time
 from ..pdfTools import details, merger
+from ..utils import metadata
 
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
@@ -58,32 +59,7 @@ def complete(folderid):
     if request.method == 'POST':
         print(request.form)
 
-        i = 0
-        ignore = False
-        temp_dict = dict()
-        ordered_file_list = []
-
-        for key, value in request.form.items():
-            print(i, key, value)
-            if i == 0:
-                if value == "on":
-                    ignore = False
-                else:
-                    ignore = True
-                    i += 1
-            if i == 1 and (not ignore):
-                temp_dict["filename"] = value
-            elif i == 2 and (not ignore):
-                temp_dict["start"] = int(value)
-            elif i == 3:
-                if not ignore:
-                    temp_dict["end"] = int(value)
-                    print(temp_dict)
-                    ordered_file_list.append(temp_dict.copy())
-                i = 0
-                ignore = False
-                continue
-            i += 1
+        ordered_file_list = metadata.build_metadata(request.form)
 
         print(ordered_file_list)
         if len(ordered_file_list) == 0:
@@ -101,4 +77,4 @@ def download(folderid):
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
     download_file = os.path.join("..", folder, folderid + ".pdf")
 
-    return send_file(download_file, as_attachment=True)
+    return send_file(download_file, as_attachment=True, cache_timeout=0)

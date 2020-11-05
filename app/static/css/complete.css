@@ -8,3 +8,12 @@
 .spectrum-AssetList-itemLabel {
   color: var(--spectrum-global-color-gray-900);
 }
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+#restart-btn {
+  margin-top: 24px;
+}
