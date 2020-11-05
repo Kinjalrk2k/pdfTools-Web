@@ -4,6 +4,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/complete.css') }}">
 {% endblock styles %}
 
+{% block title %}
+    {{ super() }}
+     | Complete
+{% endblock title %}
+
 {% block body %}
 <div class="main-content">
   <div class="heading">
