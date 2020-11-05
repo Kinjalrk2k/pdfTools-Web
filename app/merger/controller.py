@@ -28,10 +28,20 @@ def upload(folderid):
         if not os.path.exists(folder):
             os.makedirs(folder)
 
+        count = 0
         for key, f in request.files.items():
             if key.startswith('file'):
-                f.save(os.path.join(folder, f.filename))
-                print("Uploaded...", f.filename)
+                if f.filename.endswith('.pdf'):
+                    f.save(os.path.join(folder, f.filename))
+                    print("Uploaded...", f.filename)
+                    count += 1
+                else:
+                    print("Not a .pdf file!")
+                    return render_template('upload.html.j2', id=folderid)
+        if count == 0:
+            print("No files uploaded!")
+            return render_template('upload.html.j2', id=folderid)
+
         return render_template('arrange.html.j2', id=folderid)
     else:
         return render_template('upload.html.j2', id=folderid)
