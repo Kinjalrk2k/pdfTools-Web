@@ -4,6 +4,7 @@ var myDropzone = new Dropzone("div#upload-box", {
   autoProcessQueue: false,
   parallelUploads: 10,
   uploadMultiple: true,
+  acceptedFiles: ".pdf",
 });
 
 document.getElementById("submit-btn").addEventListener("click", () => {

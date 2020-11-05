@@ -65,9 +65,14 @@ p {
 
 .dropzone .dz-preview.dz-file-preview .dz-image {
   background-image: none !important;
-  background-color: var(--spectrum-alias-highlight-selected) !important;
+  background-color: var(--spectrum-global-color-red-500) !important;
 }
 
 .spectrum-IllustratedMessage-illustration {
   margin-top: 24px;
+}
+
+.dz-progress .dz-upload {
+  background-image: none !important;
+  background-color: var(--spectrum-global-color-blue-500) !important;
 }
