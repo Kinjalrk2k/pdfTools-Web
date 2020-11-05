@@ -18,3 +18,8 @@ a {
   display: flex;
   justify-content: center;
 }
+
+.spectrum-Steplist {
+  margin-bottom: 30px;
+  margin-top: 0;
+}
