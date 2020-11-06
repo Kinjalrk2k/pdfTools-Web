@@ -1,0 +1,28 @@
+{% extends 'base.html.j2' %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/expire.css') }}">
+{% endblock styles %}
+
+{% block title %}
+    {{ super() }}
+     | Session Expired
+{% endblock title %}
+
+{% block body %}
+<div class="main-content">
+  <div class="row spectrum">
+    <h1 class="spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--light">
+      Your session has expired!
+    </h1>
+  </div>
+  <div class="row">
+
+    <a href="/merger">
+      <button class="spectrum-Button spectrum-Button--cta" id="merger-btn">
+        <span class="spectrum-Button-label">Go to pdf Merger&nbsp;<i class="far fa-object-group"></i></span>
+      </button>
+    </a>
+  </div>
+</div>
+{% endblock body %}

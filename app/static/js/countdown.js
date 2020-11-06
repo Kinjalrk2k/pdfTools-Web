@@ -8,7 +8,7 @@ function countdown_wrapper(id) {
     const delta = end_time - curr_time;
 
     if (delta <= 0) {
-      window.location.href = "/session-expired";
+      window.location.href = "/merger/session-expired/";
     }
 
     const minutes = Math.floor((delta % (60 * 60)) / 60);

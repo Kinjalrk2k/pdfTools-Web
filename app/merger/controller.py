@@ -8,7 +8,7 @@ from flask import Blueprint, request, current_app, redirect, after_this_request
 import os
 import time
 from ..pdfTools import details, merger
-from ..utils import metadata
+from ..utils import metadata, checksession
 import shutil
 import threading
 
@@ -62,6 +62,9 @@ def index():
 
 @merger_blueprint.route('<folderid>/upload/', methods=['GET', 'POST'])
 def upload(folderid):
+    if not checksession.check_session_timestamp(folderid):
+        return render_template('expire.html.j2')
+
     get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
 
@@ -148,3 +151,8 @@ def download(folderid):
     r.headers.set('Content-Disposition', 'attachment',
                   filename=folderid + '.pdf')
     return r
+
+
+@merger_blueprint.route('session-expired/')
+def expired():
+    return render_template('expire.html.j2')
