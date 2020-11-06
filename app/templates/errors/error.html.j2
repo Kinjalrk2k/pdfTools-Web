@@ -1,28 +1,30 @@
 {% extends 'base.html.j2' %}
 
 {% block styles %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
 {% endblock styles %}
 
 {% block title %}
     {{ super() }}
-     | Home
+     | Oh no!
 {% endblock title %}
 
 {% block body %}
 <div class="main-content">
+    <div class="row spectrum">
+    <h1 class="spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--heavy">
+      {{ code }}
+    </h1>  
+  </div>
   <div class="row spectrum">
     <h1 class="spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--light">
-      pdfTools
-    <sup class="spectrum-Label spectrum-Label--large spectrum-Label--seafoam spectrum-Heading--heavy">
-      WEB
-    </sup>
+      {{ message }}
     </h1>
   </div>
   <div class="row">
     <a href="/merger">
       <button class="spectrum-Button spectrum-Button--cta" id="merger-btn">
-        <span class="spectrum-Button-label">pdf Merger&nbsp;<i class="far fa-object-group"></i></span>
+        <span class="spectrum-Button-label">Lets get back home!&nbsp;<i class="fas fa-home"></i></span>
       </button>
     </a>
   </div>

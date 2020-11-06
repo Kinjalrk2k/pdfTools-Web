@@ -30,4 +30,8 @@ def create_app():
     from .merger.controller import merger_blueprint
     app.register_blueprint(merger_blueprint)
 
+    from .errors.controller import error_blueprint
+    app.register_blueprint(error_blueprint)
+    # app.register_error_handler(error_blueprint)
+
     return app
