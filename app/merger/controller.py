@@ -1,4 +1,5 @@
 from re import T
+from flask.ctx import copy_current_request_context
 from flask.helpers import flash, get_flashed_messages, send_file, url_for
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
@@ -9,10 +10,46 @@ import time
 from ..pdfTools import details, merger
 from ..utils import metadata
 import shutil
+import threading
 
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
                              static_folder="../static", template_folder="../templates/merger")
+
+
+class cleanupThread(threading.Thread):
+    def __init__(self, root, threadID):
+        threading.Thread.__init__(self)
+        self.root = root
+        self.threadID = threadID
+
+    def run(self):
+        print("cleanupThread WAITING for threadID: {} started...!".format(self.threadID))
+        time.sleep(630)
+        print("cleanupThread CLEANUP for threadID: {} started...!".format(self.threadID))
+        self.cleanup(self.root, self.threadID)
+        print("cleanupThread for threadID: {} ended...!".format(self.threadID))
+
+    @staticmethod
+    def cleanup(root, id):
+        new_open_file_list = []
+        for openfile in merger.openfile_list:
+            if openfile['id'] == id:
+                openfile['file'].close()
+            else:
+                new_open_file_list.append(openfile)
+        openfile_list = new_open_file_list
+
+        folder = os.path.join(root, id)
+
+        if os.path.exists(folder):
+            for filename in os.listdir(folder):
+                filepath = os.path.join(folder, filename)
+                try:
+                    shutil.rmtree(filepath)
+                except OSError:
+                    os.remove(filepath)
+        shutil.rmtree(folder, ignore_errors=True)
 
 
 @merger_blueprint.route('/')
@@ -24,6 +61,9 @@ def index():
 
 @merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
 def upload(folderid):
+    ct = cleanupThread(current_app.config['UPLOAD_FOLDER'], folderid)
+    ct.start()
+
     get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
     if request.method == 'POST':
@@ -56,7 +96,6 @@ def arrange(folderid):
     file_list = []
     try:
         for filename in os.listdir(folder):
-            # print(details.get_page_numbers(folder, filename))
             file_list.append({
                 "filename": filename,
                 "pages": details.get_page_numbers(folder, filename)
@@ -82,33 +121,27 @@ def complete(folderid):
             print(request.referrer)
             return redirect("/merger/" + folderid + "/arrange/")
 
-        folder = current_app.config['UPLOAD_FOLDER'] + folderid
+        folder = os.path.join(current_app.config['UPLOAD_FOLDER'], folderid)
         merger.merge(ordered_file_list, folder, folderid+".pdf")
+
+        print(merger.openfile_list)
 
     return render_template("complete.html.j2", id=folderid)
 
 
 @merger_blueprint.route('<folderid>/download/')
 def download(folderid):
-    folder = current_app.config['UPLOAD_FOLDER'] + folderid
+    folder = os.path.join(current_app.config['UPLOAD_FOLDER'], folderid)
     download_file = os.path.join(folder, folderid + ".pdf")
     file_handle = open(download_file, 'rb')
+    root = current_app.config['UPLOAD_FOLDER']
 
     def generate():
         yield from file_handle
         file_handle.close()
-        # os.remove(folder)
-        # shutil.rmtree(folder, ignore_errors=True)
-        for filename in os.listdir(folder):
-            filepath = os.path.join(folder, filename)
-            try:
-                shutil.rmtree(filepath)
-            except OSError:
-                os.remove(filepath)
-        shutil.rmtree(folder, ignore_errors=True)
+        cleanupThread.cleanup(root, folderid)
 
     r = current_app.response_class(generate(), mimetype='application/pdf')
     r.headers.set('Content-Disposition', 'attachment',
                   filename=folderid + '.pdf')
     return r
-    # return send_file(download_file, as_attachment=True, cache_timeout=0)
