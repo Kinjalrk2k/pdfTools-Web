@@ -22,10 +22,11 @@ class cleanupThread(threading.Thread):
         threading.Thread.__init__(self)
         self.root = root
         self.threadID = threadID
+        self.start_time = time.time()
 
     def run(self):
         print("cleanupThread WAITING for threadID: {} started...!".format(self.threadID))
-        time.sleep(630)
+        time.sleep(660)
         print("cleanupThread CLEANUP for threadID: {} started...!".format(self.threadID))
         self.cleanup(self.root, self.threadID)
         print("cleanupThread for threadID: {} ended...!".format(self.threadID))
@@ -38,7 +39,7 @@ class cleanupThread(threading.Thread):
                 openfile['file'].close()
             else:
                 new_open_file_list.append(openfile)
-        openfile_list = new_open_file_list
+        merger.openfile_list = new_open_file_list
 
         folder = os.path.join(root, id)
 
@@ -61,12 +62,13 @@ def index():
 
 @merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
 def upload(folderid):
-    ct = cleanupThread(current_app.config['UPLOAD_FOLDER'], folderid)
-    ct.start()
-
     get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
+
     if request.method == 'POST':
+        ct = cleanupThread(current_app.config['UPLOAD_FOLDER'], folderid)
+        ct.start()
+
         if not os.path.exists(folder):
             os.makedirs(folder)
 
@@ -91,9 +93,10 @@ def upload(folderid):
 
 @merger_blueprint.route('<folderid>/arrange/',  methods=['GET', 'POST'])
 def arrange(folderid):
-    folder = current_app.config['UPLOAD_FOLDER'] + folderid
+    folder = os.path.join(current_app.config['UPLOAD_FOLDER'], folderid)
     files_dict = dict()
     file_list = []
+    print(os.listdir(folder))
     try:
         for filename in os.listdir(folder):
             file_list.append({
@@ -101,8 +104,8 @@ def arrange(folderid):
                 "pages": details.get_page_numbers(folder, filename)
             })
     except Exception:
-        flash("Please upload atleast ONE file!")
-        return redirect(url_for('merger.upload', folderid=folderid))
+        print("Please upload atleast ONE file!")
+        return redirect(url_for('merger.index'))
 
     print(file_list)
 
