@@ -60,7 +60,7 @@ def index():
     return render_template('merger.html.j2', id=curr_time)
 
 
-@merger_blueprint.route('<folderid>/upload', methods=['GET', 'POST'])
+@merger_blueprint.route('<folderid>/upload/', methods=['GET', 'POST'])
 def upload(folderid):
     get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid

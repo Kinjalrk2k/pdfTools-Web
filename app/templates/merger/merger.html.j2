@@ -47,15 +47,21 @@
   </div>
 
   <div class="row">
-    <a href="{{ id }}/upload">
+    {# <a href="{{ id }}/upload"> #}
       <button class="spectrum-Button spectrum-Button--cta" id="continue-btn">
         <span class="spectrum-Button-label">Start&nbsp;<i class="fas fa-play"></i></span>
       </button>
-    </a>
+    {# </a> #}
   </div>
 
   <div class="row tutorial-img-row">
     <img src="{{ url_for('static', filename='screenshots/light-mode.gif') }}" alt="" width="70%" id="tutorial-img-light">
     <img src="{{ url_for('static', filename='screenshots/dark-mode.gif') }}" alt="" width="70%" id="tutorial-img-dark">
   </div>
+
 {% endblock body %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/merger.js') }}"></script>
+{% endblock scripts %}

@@ -88,5 +88,20 @@
   {{ super() }}
   {{ dropzone.load_js() }}
   <script src="{{ url_for('static', filename='js/dropzone.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+  {# <script src="{{ url_for('static', filename='js/upload.js') }}"></script> #}
+  <script>
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("div#upload-box", {
+      url: "/merger/{{ id }}/upload/",
+      autoProcessQueue: false,
+      parallelUploads: 10,
+      uploadMultiple: true,
+      acceptedFiles: ".pdf",
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", () => {
+      console.log("here");
+      myDropzone.processQueue();
+    });
+  </script>
 {% endblock scripts %}
