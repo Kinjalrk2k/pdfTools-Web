@@ -8,6 +8,6 @@ var myDropzone = new Dropzone("div#upload-box", {
 });
 
 document.getElementById("submit-btn").addEventListener("click", () => {
-  console.log("here");
+  // console.log("here");
   myDropzone.processQueue();
 });

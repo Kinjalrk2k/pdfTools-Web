@@ -1,5 +1,4 @@
 .file {
-  /* background-color: brown; */
   margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
@@ -12,19 +11,13 @@
 .right {
   display: flex;
   justify-content: right;
-  /* flex-grow: 1; */
 }
 
 .left {
   display: flex;
   justify-content: left;
   align-items: center;
-  /* flex-grow: 1; */
 }
-
-/* .gu-mirror {
-  display: none;
-} */
 
 .file-input {
   display: none;
@@ -38,10 +31,8 @@
 }
 
 .spectrum-FieldButton {
-  /* border-width: 1px; */
   border: var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)) solid
     var(--spectrum-global-color-gray-500) !important;
-  /* font-weight: 900; */
   border-radius: 0px 4px 4px 0px;
 }
 
@@ -67,7 +58,6 @@
 }
 
 input[type="number" i] {
-  /* border: none; */
   border: var(--spectrum-textfield-border-size, var(--spectrum-alias-border-size-thin)) solid
     var(--spectrum-global-color-gray-500);
   -moz-appearance: textfield;

@@ -1,28 +1,9 @@
 dragula([document.getElementById("arrange-container")]);
 
-// document.getElementById("stepUp").addEventListener("click", (e) => {
-//   const ele = document.getElementById("stepUp");
-//   console.log(e.target);
-//   console.log(e.parentElement.parentElement.firstChild.nextSibling.firstChild.nextSibling.value);
-//   let targert = ele.parentElement.parentElement.firstChild.nextSibling.firstChild.nextSibling;
-
-//   targert.value = parseInt(targert.value) + 1;
-//   e.preventDefault();
-// });
-
-// document.getElementById("stepDown").addEventListener("click", (e) => {
-//   const ele = document.getElementById("stepDown");
-//   console.log(ele.parentElement.parentElement.firstChild.nextSibling.firstChild.nextSibling.value);
-//   let targert = ele.parentElement.parentElement.firstChild.nextSibling.firstChild.nextSibling;
-
-//   targert.value = parseInt(targert.value) - 1;
-//   e.preventDefault();
-// });
-
 $(".spectrum-Stepper-stepUp").on("click", function () {
   var $button = $(this);
   var oldValue = $button.parent().parent().find("input").val();
-  console.log($button.parent().parent().find("input").val());
+  // console.log($button.parent().parent().find("input").val());
 
   if ($button.parent().parent().find("input").prop("disabled")) {
     return;
@@ -36,9 +17,9 @@ $(".spectrum-Stepper-stepUp").on("click", function () {
 $(".spectrum-Stepper-stepDown").on("click", function () {
   var $button = $(this);
   var oldValue = $button.parent().parent().find("input").val();
-  console.log($button.parent().parent().find("input").val());
+  // console.log($button.parent().parent().find("input").val());
 
-  console.log($button.parent().parent().find("input").prop("disabled"));
+  // console.log($button.parent().parent().find("input").prop("disabled"));
   if ($button.parent().parent().find("input").prop("disabled")) {
     return;
   }
@@ -75,17 +56,17 @@ function checkbox(e) {
     }
   });
 
-  console.log(count_cb_checked);
+  // console.log(count_cb_checked);
   if (count_cb_checked == 0) {
     cb_list.forEach((checkb) => {
-      console.log(checkb.parentElement.parentElement.parentElement);
+      // console.log(checkb.parentElement.parentElement.parentElement);
       checkb.parentElement.parentElement.parentElement.classList.add("error");
       document.getElementById("submit-btn").disabled = true;
     });
     document.querySelector(".error-row div").style.display = "flex";
   } else {
     cb_list.forEach((checkb) => {
-      console.log(checkb.parentElement.parentElement.parentElement);
+      // console.log(checkb.parentElement.parentElement.parentElement);
       checkb.parentElement.parentElement.parentElement.classList.remove("error");
       document.getElementById("submit-btn").disabled = false;
     });

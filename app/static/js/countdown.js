@@ -35,7 +35,7 @@ function countdown_wrapper(id) {
 
     // console.log(minutes + ":" + seconds);
     countdown_text.innerHTML = zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2);
-    console.log((elapsed / time_limit) * 100);
+    // console.log((elapsed / time_limit) * 100);
     countdown_progress.style.width = (elapsed / time_limit) * 100 + "%";
   }, 1000);
 }

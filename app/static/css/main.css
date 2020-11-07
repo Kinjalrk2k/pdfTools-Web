@@ -1,6 +1,5 @@
 .main-content {
   margin-top: 120px;
-  /* display: flex; */
 }
 
 .heading {
@@ -25,7 +24,6 @@ a {
 }
 
 .spectrum-Toast {
-  /* position: relative; */
   position: fixed;
   top: 24px;
   right: 24px;
