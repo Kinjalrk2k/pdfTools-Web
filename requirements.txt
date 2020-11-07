@@ -8,6 +8,10 @@ MarkupSafe==1.1.1
 pycodestyle==2.6.0
 PyPDF2==1.26.0
 python-dotenv==0.15.0
+python-engineio==3.13.2
+pytz==2020.4
+six==1.15.0
 toml==0.10.2
+tzlocal==2.1
 Werkzeug==1.0.1
 WTForms==2.3.3
