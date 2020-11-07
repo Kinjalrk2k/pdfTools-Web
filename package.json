@@ -1,0 +1,19 @@
+{
+  "name": "pdftools-web",
+  "version": "1.0.0",
+  "description": "A web interface with various tools working on PDF files",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd app/static/ && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kinjalrk2k/pdfTools-Web.git"
+  },
+  "author": "Kinjal Raykarmakar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kinjalrk2k/pdfTools-Web/issues"
+  },
+  "homepage": "https://github.com/Kinjalrk2k/pdfTools-Web#readme"
+}
