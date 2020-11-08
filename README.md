@@ -4,6 +4,8 @@ A web application to merge PDF files.
 
 **_This web application isn't optimized for mobile site_**
 
+Find a CLI version here: [pdfTools](https://github.com/Kinjalrk2k/pdfTools)
+
 Deployed [here](https://pdft00ls.herokuapp.com/)
 
 ## Usage
