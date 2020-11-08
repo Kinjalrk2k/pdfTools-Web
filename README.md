@@ -12,6 +12,40 @@ Deployed [here](https://pdft00ls.herokuapp.com/)
 
 ![tutorial](/app/static/screenshots/total.gif)
 
+## Use locally
+
+- Clone this repository and move to it's directory
+  ```shell
+  git clone https://github.com/Kinjalrk2k/pdfTools-Web.git
+  cd pdfTools-Web
+  ```
+- Creating and activating the virtual envoirnment
+  ```shell
+  python3 -m venv env
+  source env/bin/activate // for macOS/Linux (or when using bash)
+  .\env\Scripts\activate  //  for windows
+  ```
+- Install the dependencies
+  - Python
+  ```shell
+  pip install -r requirements.txt
+  ```
+  - NPM
+  ```shell
+  cd app/static
+  npm install
+  ```
+- Make a .env file in the root
+  ```
+  FLASK_APP=manage.py
+  FLASK_ENV=development
+  ```
+- Run the server
+  ```shell
+  flask run
+  ```
+  Follow the prompt for the URL of the server
+
 ## Technologies used
 
 - Backend
