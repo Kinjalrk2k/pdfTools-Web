@@ -2,6 +2,8 @@
 
 A web application to merge PDF files.
 
+**_This web application isn't optimized for mobile site_**
+
 Deployed [here](https://pdft00ls.herokuapp.com/)
 
 ## Usage
