@@ -1,4 +1,23 @@
 dragula([document.getElementById("arrange-container")]);
+(function () {
+  document.querySelectorAll(".spectrum-Checkbox-input").forEach((chkb) => {
+    if (chkb.checked) {
+      chkb.parentElement.parentElement.parentElement.classList.remove("disabled");
+      chkb.parentElement.parentElement.parentElement
+        .querySelectorAll(".spectrum-Stepper-input")
+        .forEach((stepper) => {
+          stepper.disabled = false;
+        });
+    } else {
+      chkb.parentElement.parentElement.parentElement.classList.add("disabled");
+      chkb.parentElement.parentElement.parentElement
+        .querySelectorAll(".spectrum-Stepper-input")
+        .forEach((stepper) => {
+          stepper.disabled = true;
+        });
+    }
+  });
+})();
 
 $(".spectrum-Stepper-stepUp").on("click", function () {
   var $button = $(this);
