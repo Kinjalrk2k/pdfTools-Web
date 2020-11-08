@@ -13,8 +13,8 @@ Deployed [here](https://pdft00ls.herokuapp.com/)
 - Backend
   - Flask: Framework
   - PyPDF2: Handling PDF files
+- Jinja: Templating
 - Frontend
-  - Jinja: Templating
   - Spectrum CSS: Adobe’s design system → Overall design
   - Dropzone: Handling drag-n-drop file upload
   - Dragula: Handling drag to arrange
