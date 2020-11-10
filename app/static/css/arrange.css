@@ -114,3 +114,7 @@ button svg {
   color: var(--spectrum-alias-icon-color-error) !important;
   display: none;
 }
+
+.clone {
+  margin-right: 12px;
+}

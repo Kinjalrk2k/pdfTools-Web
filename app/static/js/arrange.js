@@ -19,7 +19,7 @@ dragula([document.getElementById("arrange-container")]);
   });
 })();
 
-$(".spectrum-Stepper-stepUp").on("click", function () {
+$(document).on("click", ".spectrum-Stepper-stepUp", function () {
   var $button = $(this);
   var oldValue = $button.parent().parent().find("input").val();
   // console.log($button.parent().parent().find("input").val());
@@ -33,7 +33,7 @@ $(".spectrum-Stepper-stepUp").on("click", function () {
   $button.parent().parent().find("input").val(newVal);
 });
 
-$(".spectrum-Stepper-stepDown").on("click", function () {
+$(document).on("click", ".spectrum-Stepper-stepDown", function () {
   var $button = $(this);
   var oldValue = $button.parent().parent().find("input").val();
   // console.log($button.parent().parent().find("input").val());
@@ -58,6 +58,7 @@ function checkbox(e) {
       .forEach((stepper) => {
         stepper.disabled = false;
       });
+    targ.parentElement.parentElement.parentElement.querySelector("#clone-btn").disabled = false;
   } else {
     targ.parentElement.parentElement.parentElement.classList.add("disabled");
     targ.parentElement.parentElement.parentElement
@@ -65,6 +66,7 @@ function checkbox(e) {
       .forEach((stepper) => {
         stepper.disabled = true;
       });
+    targ.parentElement.parentElement.parentElement.querySelector("#clone-btn").disabled = true;
   }
 
   const cb_list = document.querySelectorAll(".spectrum-Checkbox-input");
@@ -91,4 +93,24 @@ function checkbox(e) {
     });
     document.querySelector(".error-row div").style.display = "none";
   }
+}
+
+let clonedElementsNum = 0;
+
+function clone(e) {
+  const clonedElement = e.parentElement.parentElement.parentElement.cloneNode(true);
+  const parent = document.getElementById("arrange-container");
+
+  clonedElement.querySelector(".spectrum-Checkbox-input").name += "_cloned_" + clonedElementsNum;
+  clonedElement.querySelector(".file-input").name += "_cloned_" + clonedElementsNum;
+  clonedElement.querySelector("#p_start").name += "_cloned_" + clonedElementsNum;
+  clonedElement.querySelector("#p_end").name += "_cloned_" + clonedElementsNum;
+
+  clonedElementsNum++;
+  // console.log(clonedElement.querySelector(".spectrum-Checkbox-input").name);
+  // console.log(clonedElement.querySelector(".file-input").name);
+  // console.log(clonedElement.querySelector("#p_start").name);
+  // console.log(clonedElement.querySelector("#p_end").name);
+
+  parent.appendChild(clonedElement);
 }
