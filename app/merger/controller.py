@@ -11,66 +11,33 @@ from ..pdfTools import details, merger
 from ..utils import metadata, checksession
 import shutil
 import threading
+from ..cleanup import cleanupThread
 
 
 merger_blueprint = Blueprint('merger', __name__, url_prefix="/merger",
                              static_folder="../static", template_folder="../templates/merger")
 
 
-class cleanupThread(threading.Thread):
-    def __init__(self, root, threadID):
-        threading.Thread.__init__(self)
-        self.root = root
-        self.threadID = threadID
-        self.start_time = time.time()
-
-    def run(self):
-        print("cleanupThread WAITING for threadID: {} started...!".format(self.threadID))
-        time.sleep(660)
-        print("cleanupThread CLEANUP for threadID: {} started...!".format(self.threadID))
-        self.cleanup(self.root, self.threadID)
-        print("cleanupThread for threadID: {} ended...!".format(self.threadID))
-
-    @staticmethod
-    def cleanup(root, id):
-        new_open_file_list = []
-        for openfile in merger.openfile_list:
-            if openfile['id'] == id:
-                openfile['file'].close()
-            else:
-                new_open_file_list.append(openfile)
-        merger.openfile_list = new_open_file_list
-
-        folder = os.path.join(root, id)
-
-        if os.path.exists(folder):
-            for filename in os.listdir(folder):
-                filepath = os.path.join(folder, filename)
-                try:
-                    shutil.rmtree(filepath)
-                except OSError:
-                    os.remove(filepath)
-        shutil.rmtree(folder, ignore_errors=True)
-
-
 @merger_blueprint.route('/')
 def index():
     curr_time = int(time.time())
-    print('index')
+    print(current_app.config['TIME_LIMIT'])
     return render_template('merger.html.j2', id=curr_time)
 
 
 @merger_blueprint.route('<folderid>/upload/', methods=['GET', 'POST'])
 def upload(folderid):
-    if not checksession.check_session_timestamp(folderid):
+    if current_app.config['TIME_LIMIT'] and not checksession.check_session_timestamp(folderid, current_app.config['TIME_LIMIT']):
         return render_template('expire.html.j2')
 
     get_flashed_messages()
     folder = current_app.config['UPLOAD_FOLDER'] + folderid
 
     if request.method == 'POST':
-        ct = cleanupThread(current_app.config['UPLOAD_FOLDER'], folderid)
-        ct.start()
+        if current_app.config['TIME_LIMIT']:
+            ct = cleanupThread.cleanupThread(
+                current_app.config['UPLOAD_FOLDER'], folderid, current_app.config['TIME_LIMIT'])
+            ct.start()
 
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -84,18 +51,20 @@ def upload(folderid):
                     count += 1
                 else:
                     print("Not a .pdf file!")
-                    return render_template('upload.html.j2', id=folderid)
+                    return render_template('upload.html.j2', id=folderid, expires=current_app.config['TIME_LIMIT'])
         if count == 0:
             print("No files uploaded!")
-            return render_template('upload.html.j2', id=folderid)
+            return render_template('upload.html.j2', id=folderid, expires=current_app.config['TIME_LIMIT'])
 
-        return render_template('arrange.html.j2', id=folderid)
+        return render_template('arrange.html.j2', id=folderid, expires=current_app.config['TIME_LIMIT'])
     else:
-        return render_template('upload.html.j2', id=folderid)
+        return render_template('upload.html.j2', id=folderid, expires=current_app.config['TIME_LIMIT'])
 
 
 @merger_blueprint.route('<folderid>/arrange/',  methods=['GET', 'POST'])
 def arrange(folderid):
+    if current_app.config['TIME_LIMIT'] and not checksession.check_session_timestamp(folderid, current_app.config['TIME_LIMIT']):
+        return render_template('expire.html.j2')
     folder = os.path.join(current_app.config['UPLOAD_FOLDER'], folderid)
     files_dict = dict()
     file_list = []
@@ -112,11 +81,13 @@ def arrange(folderid):
 
     print(file_list)
 
-    return render_template('arrange.html.j2', file_list=file_list, id=folderid)
+    return render_template('arrange.html.j2', file_list=file_list, id=folderid, expires=current_app.config['TIME_LIMIT'])
 
 
 @merger_blueprint.route('<folderid>/complete/', methods=['GET', 'POST'])
 def complete(folderid):
+    if current_app.config['TIME_LIMIT'] and not checksession.check_session_timestamp(folderid, current_app.config['TIME_LIMIT']):
+        return render_template('expire.html.j2')
     if request.method == 'POST':
         print(request.form)
 
@@ -132,7 +103,7 @@ def complete(folderid):
 
         print(merger.openfile_list)
 
-    return render_template("complete.html.j2", id=folderid)
+    return render_template("complete.html.j2", id=folderid, expires=current_app.config['TIME_LIMIT'])
 
 
 @merger_blueprint.route('<folderid>/download/')
@@ -145,7 +116,8 @@ def download(folderid):
     def generate():
         yield from file_handle
         file_handle.close()
-        cleanupThread.cleanup(root, folderid)
+        if current_app.config['TIME_LIMIT']:
+            cleanupThread.cleanupThread.cleanup(root, folderid)
 
     r = current_app.response_class(generate(), mimetype='application/pdf')
     r.headers.set('Content-Disposition', 'attachment',

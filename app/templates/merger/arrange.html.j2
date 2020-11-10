@@ -144,6 +144,6 @@
 
   <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
   <script>
-    countdown_wrapper({{ id }})
+    countdown_wrapper({{ id }}, {{ expires }})
   </script>
 {% endblock scripts %}

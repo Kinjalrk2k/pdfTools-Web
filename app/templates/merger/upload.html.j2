@@ -19,7 +19,11 @@
     </svg>
     <div class="spectrum-Toast-body">
       <div class="spectrum-Toast-content">
+      {% if not expires %}
+        No time limit! <br> You are under Local Configuration!
+      {% else %}
         This session expires in: <strong><span id="countdown">10:00</span></strong>
+      {% endif %}
       </div>
     </div>
   </div>
@@ -123,6 +127,6 @@
 
   <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
   <script>
-    countdown_wrapper({{ id }})
+    countdown_wrapper({{ id }}, {{ expires | tojson}})
   </script>
 {% endblock scripts %}

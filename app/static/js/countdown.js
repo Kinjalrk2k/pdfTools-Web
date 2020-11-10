@@ -1,10 +1,16 @@
 const zeroPad = (num, places) => String(num).padStart(places, "0");
-const time_limit = 600;
+let time_limit = 0;
 const toast_target = document.getElementsByClassName("spectrum-Toast")[0];
 const countdown_text = document.getElementById("countdown");
 const countdown_progress = document.querySelector(".progress-bar #bar");
 
-function countdown_wrapper(id) {
+function countdown_wrapper(id, expires) {
+  console.log(expires);
+  if (!expires) {
+    return;
+  } else {
+    time_limit = Number(expires);
+  }
   setInterval(function () {
     const start_time = Number(id);
     const end_time = start_time + time_limit;

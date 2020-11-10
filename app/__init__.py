@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Request
 from flask.helpers import url_for
 from werkzeug.utils import redirect
-from config import DevConfig
+from config import LocalConfig as CurrentConfig
 from flask_dropzone import Dropzone
 
 from werkzeug.datastructures import ImmutableOrderedMultiDict
@@ -20,7 +20,7 @@ dropzone = Dropzone()
 
 def create_app():
     app = MyFlask(__name__)
-    app.config.from_object(DevConfig)
+    app.config.from_object(CurrentConfig)
 
     dropzone.init_app(app)
 
