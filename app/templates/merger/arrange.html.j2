@@ -75,6 +75,12 @@
               name="file_{{ loop.index }}['check']" checked onclick="checkbox(this);">
               <span class="spectrum-Checkbox-box"></span>
             </div>
+
+            <div class="clone">
+              <button type="button" class="spectrum-ActionButton" id="clone-btn">
+                <span class="spectrum-ActionButton-label"><i class="far fa-clone"></i> Clone</span>
+              </button>
+            </div>
             
             <input type="text" name="file_{{ loop.index }}['name']" id="" value="{{ file['filename'] }}" class="file-input">
             <div>
@@ -144,6 +150,6 @@
 
   <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
   <script>
-    countdown_wrapper({{ id }}, {{ expires }})
+    countdown_wrapper({{ id }}, {{ expires | tojson}})
   </script>
 {% endblock scripts %}
