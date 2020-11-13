@@ -17,7 +17,11 @@
     </svg>
     <div class="spectrum-Toast-body">
       <div class="spectrum-Toast-content">
+      {% if not expires %}
+        No time limit! <br> You are under Local Configuration!
+      {% else %}
         This session expires in: <strong><span id="countdown">10:00</span></strong>
+      {% endif %}
       </div>
     </div>
   </div>
