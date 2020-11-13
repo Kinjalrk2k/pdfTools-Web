@@ -18,7 +18,11 @@
     </svg>
     <div class="spectrum-Toast-body">
       <div class="spectrum-Toast-content">
+      {% if not expires %}
+        No time limit! <br> You are under Local Configuration!
+      {% else %}
         This session expires in: <strong><span id="countdown">10:00</span></strong>
+      {% endif %}
       </div>
     </div>
   </div>
@@ -27,6 +31,13 @@
       <div id="bar"></div>
     </div>
   </div>
+</div>
+
+<div class="tutorial-div">
+  <i class="fas fa-graduation-cap"></i>
+  <button class="spectrum-Button spectrum-Button--overBackground" onclick="arrangeCoach.nextCoach()">
+    <span class="spectrum-Button-label">Start Tutorial</span>
+  </button>
 </div>
 
 <div class="main-content">
@@ -83,7 +94,7 @@
             </div>
             
             <input type="text" name="file_{{ loop.index }}['name']" id="" value="{{ file['filename'] }}" class="file-input">
-            <div>
+            <div class="filename">
               <i class="fas fa-file-pdf" style="color:#F40F02"></i>&nbsp;&nbsp;&nbsp;{{ file['filename'] }}
             </div>
           </div>
@@ -123,8 +134,6 @@
       {% endfor %}
     </div>
 
-
-
     <div class="error-row row">
       <div class="spectrum-StatusLight spectrum-StatusLight--negative">Please select atleast one file!</div>
     </div>
@@ -151,5 +160,38 @@
   <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
   <script>
     countdown_wrapper({{ id }}, {{ expires | tojson}})
+
+    const arrangeCoach = new Coach([
+      {
+        target: ".file",
+        head: "File row",
+        body: "Drag and Move these rows to arrange your files in order. The order of files specified here will reflect in the output file!"
+      },
+      {
+        target: ".spectrum-Checkbox",
+        head: "Checkbox",
+        body: "By default this checkbox is checked. If you want to exclude a file, uncheck this. When unchecked the row will greyed-out"
+      },
+      {
+        target: ".clone",
+        head: "Clone",
+        body: "Click this button to clone a file. You can use a single file multiple times to merge different page-ranges interleaved with other files!"
+      },
+      {
+        target: ".filename",
+        head: "Filename",
+        body: "The filename of the file you uploaded. This will help you navigate and arrange!"
+      },
+      {
+        target: ".right",
+        head: "Page Range",
+        body: "Use these steppers to specify the range of pages to be included in the output!"
+      },
+      {
+        target: "#submit-btn",
+        head: "Merge",
+        body: "When all the files are arranged and page-ranges set as per your needs, click on the Merge button to generate the output file"
+      },
+    ])
   </script>
 {% endblock scripts %}
