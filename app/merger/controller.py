@@ -113,13 +113,22 @@ def download(folderid):
     file_handle = open(download_file, 'rb')
     root = current_app.config['UPLOAD_FOLDER']
 
-    def generate():
-        yield from file_handle
-        file_handle.close()
-        if current_app.config['TIME_LIMIT']:
-            cleanupThread.cleanupThread.cleanup(root, folderid)
+    r = None
 
-    r = current_app.response_class(generate(), mimetype='application/pdf')
+    if current_app.config['TIME_LIMIT']:
+        def generate_and_delete():
+            yield from file_handle
+            file_handle.close()
+            cleanupThread.cleanupThread.cleanup(root, folderid)
+        r = current_app.response_class(
+            generate_and_delete(), mimetype='application/pdf')
+
+    else:
+        def generate():
+            yield from file_handle
+            file_handle.close()
+        r = current_app.response_class(generate(), mimetype='application/pdf')
+
     r.headers.set('Content-Disposition', 'attachment',
                   filename=folderid + '.pdf')
     return r
