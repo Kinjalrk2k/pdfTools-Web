@@ -12,6 +12,8 @@
   position: fixed;
   top: 10px;
   background-color: var(--spectrum-global-color-gray-50);
+
+  z-index: 999;
 }
 
 #navbar.spectrum--dark {

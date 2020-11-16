@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .main-content {
   margin-top: 120px;
 }
@@ -51,4 +55,24 @@ a {
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
   transition: all 1s ease-out;
+}
+
+.tutorial-div {
+  background-color: rgb(15, 121, 125);
+  color: rgb(15, 121, 125);
+  padding: 15px 20px;
+  display: inline-block;
+
+  position: fixed;
+  right: 0;
+
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+
+  padding-right: 12px;
+}
+
+.tutorial-div i {
+  color: white;
+  font-size: xx-large;
 }
