@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Request
 from flask.helpers import url_for
 from werkzeug.utils import redirect
-from config import DevConfig as CurrentConfig
+from config import ProdConfig as CurrentConfig
 from flask_dropzone import Dropzone
 
 from werkzeug.datastructures import ImmutableOrderedMultiDict
