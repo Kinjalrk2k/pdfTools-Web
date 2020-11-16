@@ -40,6 +40,14 @@ Deployed [here](https://pdft00ls.herokuapp.com/)
   FLASK_APP=manage.py
   FLASK_ENV=development
   ```
+- **[IMPORTANT]**: For local Configuration
+  - This local configuration imposes no-time limit to the whole functionality
+  - Explore `app/__init__.py` and
+    - Replace the line `from config import ProdConfig as CurrentConfig` with `from config import LocalConfig as CurrentConfig`
+    - ```shell
+      - from config import ProdConfig as CurrentConfig
+      + from config import LocalConfig as CurrentConfig
+      ```
 - Run the server
   ```shell
   flask run
