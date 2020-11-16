@@ -1,4 +1,5 @@
 # pdfTools-Web
+![Production](https://github.com/Kinjalrk2k/pdfTools-Web/workflows/Production/badge.svg)
 
 A web application to merge PDF files.
 
