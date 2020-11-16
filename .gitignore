@@ -132,4 +132,8 @@ dmypy.json
 #node
 node_modules
 
+#vscode
+.vscode/
+
+##server
 uploads/
